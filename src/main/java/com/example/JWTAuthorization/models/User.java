@@ -1,5 +1,7 @@
 package com.example.JWTAuthorization.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -18,11 +20,21 @@ public class User {
     private String username;
     private String email;
     private String password;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany
+    @JoinTable(name = "user_debts_to")
+    private final Set<Debt> debtsToUsers = new HashSet<>();
+
+    @OneToMany
+    @JsonIgnore
+    @JoinTable(name = "user_debts_from")
+    private final Set<Debt> debtsFromUsers = new HashSet<>();
 
     public User() {}
 
@@ -70,5 +82,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Debt> getDebtsFromUsers() {
+        return debtsFromUsers;
+    }
+
+    public Set<Debt> getDebtsToUsers() {
+        return debtsToUsers;
     }
 }
