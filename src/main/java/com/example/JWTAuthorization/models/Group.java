@@ -20,12 +20,13 @@ public class Group {
     @ManyToMany
     @JoinTable(name = "users_groups",
             joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "username"))
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private final Set<User> users = new HashSet<>();
 
-    public Group(String name, long balance) {
+    public Group(String name, long balance, User creator) {
         this.name = name;
         this.balance = balance;
+        this.users.add(creator);
     }
 
     public Group() {}

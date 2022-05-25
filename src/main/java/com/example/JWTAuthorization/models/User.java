@@ -36,6 +36,12 @@ public class User {
     @JoinTable(name = "user_debts_from")
     private final Set<Debt> debtsFromUsers = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "groups_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private final Set<Group> groups = new HashSet<>();
+
     public User() {}
 
     public User(String username, String email, String password) {
@@ -90,5 +96,9 @@ public class User {
 
     public Set<Debt> getDebtsToUsers() {
         return debtsToUsers;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
     }
 }
