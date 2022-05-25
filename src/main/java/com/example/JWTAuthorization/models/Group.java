@@ -57,4 +57,8 @@ public class Group {
     public Set<User> getUsers() {
         return users;
     }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
 }
